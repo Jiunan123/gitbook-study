@@ -1,4 +1,4 @@
-# Vue模拟
+# Vue响应式模拟
 
 ## 模块
 - mvue.html

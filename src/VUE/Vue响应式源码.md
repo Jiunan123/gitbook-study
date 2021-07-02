@@ -1,4 +1,4 @@
-# Vue
+# Vue响应式源码分析
 
 
 
@@ -32,7 +32,7 @@
 
 6. 关系图
 
-   ![vue响应式渲染关系图](../assets/img/img01-vue.png)
+   ![vue响应式渲染关系图](../../assets/img/img01-vue.png)
 
 ### 注意
 
@@ -123,6 +123,64 @@ export function mountComponent (
 }
 ```
 
+源码路径：core/observer/watcher.js
+
+模块：Watcher
+
+```js
+export default class Watcher {
+  constructor (
+    vm: Component,
+    expOrFn: string | Function,
+    cb: Function,
+    options?: ?Object,
+    isRenderWatcher?: boolean
+  ) {
+    this.vm = vm
+    if (isRenderWatcher) {
+      vm._watcher = this
+    }
+    // options
+    if (options) {
+      this.deep = !!options.deep
+      this.user = !!options.user
+      this.lazy = !!options.lazy
+      this.sync = !!options.sync
+      this.before = options.before
+    } else {
+      this.deep = this.user = this.lazy = this.sync = false
+    }
+    this.cb = cb
+    this.id = ++uid // uid for batching
+    this.deps = [] // Watcher 与 dep 是多对多的关系
+    this.newDeps = []
+    this.depIds = new Set()
+    this.newDepIds = new Set()
+		/* ...以上省略部分代码 */
+      
+    // parse expression for getter
+    if (typeof expOrFn === 'function') {
+      this.getter = expOrFn
+    } else {
+      this.getter = parsePath(expOrFn)
+      /* ...省略部分代码 */
+    }
+    /* 在创建完watcher, 立刻调用一次get
+     * 调用get会在相关联的响应式属性的dep收集对应的watcher
+     * renderWatcher被执行的时候是调用render函数，同样会触发属性的get
+     * computed属性lazy=true
+     */
+    this.value = this.lazy
+      ? undefined
+      : this.get()
+  }
+}
+```
+
+
+
+
+
 源码路径：core/instance/lifecycle.js
 
 模块：Vue.prototype._update
@@ -164,12 +222,13 @@ Vue.prototype._update = function (vnode: VNode, hydrating?: boolean) {
 
 ### 注意
 
-性能优化：
-
-- 组件拆分：由于1个组件对应一个watcher，所以频繁更新的模块应该拆分成独立的子组件。
+- watcher 可分为render watcher、user watcher
+  - render watcher：组件级别的watcher
+  - user watcher： $watcher(), computed/watcher选项:
+- 组件拆分：由于1个组件对应一个render watcher，所以频繁更新的模块应该拆分成独立的子组件。
 - watcher 和 dep 是多对多的关系：
-  - 1个组件对应一个watcher，则多个数据对应一个watcher
-  - props、watch、computed 响应式数据，可关联多个组件数据，render watcher, 即一个数据对应多个watcher
+  - 1个组件对应一个watcher，则多个dip对应一个watcher
+  - User watcher 可对应多个dep
 
 ### 流程总结
 
