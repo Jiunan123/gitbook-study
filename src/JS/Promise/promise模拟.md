@@ -16,7 +16,7 @@
 // MPromise.mjs
 
 const MPromistState = {
-    pedding: 'pedding',
+    pending: 'pending',
     fulfilled: 'fulfilled',
     rejected: 'rejected'
 }
@@ -26,7 +26,7 @@ let counter = 0;
 export default class MPromise {
     constructor (cb) {
         // 1. 初始化
-        this["[[PromiseState]]"] = MPromistState.pedding;
+        this["[[PromiseState]]"] = MPromistState.pending;
         this["[[PromiseResult]]"] = undefined;
         this.resolvedCallbacks = [];
         this.rejectedCallbacks = [];
@@ -94,7 +94,7 @@ export default class MPromise {
             this.rejectedCallbacks.push(onRejected);
             this.subResolves.push(res);
 
-            if (this["[[PromiseState]]"] !== MPromistState.pedding) {
+            if (this["[[PromiseState]]"] !== MPromistState.pending) {
                 this.timeFunc()
             }
         })
