@@ -1,7 +1,6 @@
 # Summary
 
 * [Introduction](README.md)
-
 * [VUE](src/VUE/index.md)
   
   * VueRouter
@@ -14,7 +13,6 @@
     * [Mocha_chai](src/测试/mocha_chai.md)
     * [【转】Vue-test](src/测试/[转]Vue-test.md)
     * [rspec](src/测试/rspec.md)
-  
 * JS
   * 小专题合集
     * [string](src/JS/小专题合集/string.md)
@@ -25,6 +23,14 @@
   * Promise
     * [async 和 yiled](src/JS/Promise/async_yield.md)
     * [promise模拟](src/JS/Promise/promise模拟.md)
-  
-* 
+* CSS
+  * [ellipsis](src/CSS/ellipsis.md)
+* 专题开发：
+  * 微信公众号：
+    * [公众号图文推送](src/微信公众号/公众号图文.md)
+    * [公众号前端](src/微信公众号/公众号前端.md)
+* 工具安装
+  * [vue-devtools](src/工具安装/vue-devtools.md)
+* 兼容问题
+  * [VUE兼容IE11](src/兼容问题/VUE兼容IE11.md)
 
