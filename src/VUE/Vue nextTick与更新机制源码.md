@@ -310,8 +310,7 @@ if (typeof Promise !== 'undefined' && isNative(Promise)) {
 
 ### 总结：
 
-- nextTick: Promise. > MutationObserver > setImmadiate > setTimeout(cb,0)
-
+- nextTick: Promise > MutationObserver > setImmadiate > setTimeout(cb,0)
 - 一轮nextTick（初始：pending=false, callbacks=[]）
   - nextTick被调用
     - pending = true
@@ -319,6 +318,9 @@ if (typeof Promise !== 'undefined' && isNative(Promise)) {
     - 冲刷任务进入微任务队列
   - nextTick再次被调用，callbacks.push(callback)
   - 直到冲刷任务被执行：遍历callbacks，执行回调，重置：pending=false, callbacks.length=0
+- 触发nextTick，包含两种形式：
+  - 隐式：响应式属性被调用了setter, 则会隐式出发nextTick，并维护一个queue，存放属性更新事件和renderWatcher。等开始执行微任务的时候，会把queue按照watcher的id进行从小到大排序。
+  - 显示：nextTick
 
 ## 思考
 

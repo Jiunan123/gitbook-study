@@ -18,3 +18,17 @@ Autoprefixer
 
 控制折行方式 word wrap ：word wrap column
 
+## 正则查找
+
+查找串1(.*)查找串2
+
+## 快捷键
+
+批量设置光标到行尾：shift + option + i
+
+## 插件
+
+- Vue vscode snippets
+- Element UI snippets
+- Volar： 鼠标悬浮查看数据类型，支持跳转到typescript类型定义
+

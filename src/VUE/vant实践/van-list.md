@@ -229,7 +229,12 @@ Vue.prototype.$toast({
 });
 ```
 
-## 3. 注意事项
+## 3. 首次进入onload 不触发
+
+1. 检查van-list的高度
+2. Debugger check方法，查看scroller的相对视口数据是否正常，或者单步执行。
+
+## 4. 注意事项
 
 1. 当去请求数据的时候，需要设置 loading = true, 否则会产生多个请求（onload一直触发）。
 
